@@ -14,7 +14,27 @@ var options = {
     count: 100,
     scales: 10,//刻度数的个数 
     base: 10,//刻度之间的差值
-    color: ["#00CED1", "#4169E1", "#B22222"]
+  },
+  dashboard: {
+    beginAngle: 45,
+    endAngle: 315,
+    stages: [{
+      color: "#00CED1",
+      stage: 0.2
+    },
+    {
+      color: '#4169E1',
+      stage: 0.6
+    },
+    {
+      color: '#B22222',
+      stage: 0.7
+    }
+      ,
+    {
+      color: '#B2FF22',
+      stage: 1
+    }]
   }
 }
 // page/home/home.js
@@ -95,68 +115,85 @@ function optionHandle() {
  * 开始画guage图表
  */
 function drawGuageChart(domSize) {
-  var context = wx.createCanvasContext('gauge-canvas');
-  //背景
-  context.setFillStyle('#dddddd')
-  context.fillRect(0, 0, domSize.width, domSize.height);
-  var guageRadian = Math.PI * 3 / 2;
-  var guageFirLong = guageRadian * 2 / options.scaleParams.scales
-  radius = (domSize.width - left - right) / 2
-  //画外表盘
-  for (var i = 0; i < options.scaleParams.color.length; i++) {
-    context.beginPath()
-    context.setStrokeStyle(options.scaleParams.color[i])
-    context.setLineWidth(options.grid.pointerWidth)
-    if (i == 0) {
-      context.arc(domSize.width / 2, domSize.height / 2, (domSize.width - left - right) / 2, Math.PI * 3 / 4, Math.PI * 3 / 4 + guageFirLong, false)
-    } else if (i == 1) {
-      context.arc(domSize.width / 2, domSize.height / 2, (domSize.width - left - right) / 2, Math.PI * 3 / 4 + guageFirLong, Math.PI / 4 - guageFirLong, false)
-    } else {
-      context.arc(domSize.width / 2, domSize.height / 2, (domSize.width - left - right) / 2, Math.PI / 4 - guageFirLong, Math.PI / 4, false)
-    }
-    context.stroke()
-  }
-  //画刻度
-  var beginAngle = 135;
-  var endAngle = 45;
-  var sumAngle = 270;
-  var count = 50;
-  for (var i = 0; i < count + 1; i++) {
-    var _angle = (beginAngle + (sumAngle / count) * i) % 360
-   
-    var scaleLength = i % 5 == 0 ? radius - options.grid.pointerWidth / 2 : radius - options.grid.pointerWidth / 6
-   
-    var point1 = calScalePoi(domSize.width / 2, domSize.height / 2, _angle, radius + options.grid.pointerWidth / 2);
-    var point2 = calScalePoi(domSize.width / 2, domSize.height / 2, _angle, scaleLength);
-    context.beginPath()
-    context.setLineWidth(i % 5 == 0 ? 2 : 0.5)
-    context.moveTo(point1.x, point1.y)
-    context.lineTo(point2.x, point2.y)
-    
-    context.setStrokeStyle('#ffffff')
-    context.stroke()
-    if(i % 5 ==0){
-      var textPoint = calScalePoi(domSize.width / 2, domSize.height / 2, _angle, radius - options.grid.pointerWidth);
-      context.setFillStyle('#000000')
-      context.setFontSize(10)
-      context.setTextAlign('center')
-      context.setTextBaseline('middle')
-      context.fillText(i / 5 * 10, textPoint.x, textPoint.y)
-    }
-  }
+
+  //画布
+  var ctx = wx.createCanvasContext('gauge-canvas')
 
   //中心点坐标
   var centerX = domSize.width / 2
   var centerY = domSize.height / 2
 
+  //刻度总数
+  var sumAngle = options.dashboard.endAngle - options.dashboard.beginAngle
+  sumAngle = sumAngle < 0 ? 360 + sumAngle : sumAngle
+
+  var count = 50;
+
+  //外表盘半径
+  var dashboardRadius = (domSize.width - left - right) / 2
+
+  //填充背景
+  ctx.setFillStyle('#eeeeee')
+  ctx.fillRect(0, 0, domSize.width, domSize.height)
+
+  //前一个角度
+  var prevAngle = options.dashboard.beginAngle;
+
+  //仪表板宽度
+  ctx.setLineWidth(options.grid.pointerWidth)
+
   //指示器指针所指向的值
   var pointValue = 0
+
+  //画外表盘
+  for (var i = 0; i < options.dashboard.stages.length; i++) {
+    ctx.beginPath()
+    //设置仪表盘颜色
+    ctx.setStrokeStyle(options.dashboard.stages[i].color)
+
+    //此阶段的角度
+    var stageEndAngle = (options.dashboard.beginAngle + sumAngle * options.dashboard.stages[i].stage) % 360
+
+    ctx.arc(centerX, centerY, dashboardRadius, prevAngle / 180 * Math.PI, stageEndAngle / 180 * Math.PI, false)
+    ctx.stroke()
+    prevAngle = stageEndAngle
+  }
+
+  //画刻度
+  for (var i = 0; i < count + 1; i++) {
+
+    //当前刻度的角度
+    var _angle = (options.dashboard.beginAngle + (sumAngle / count) * i) % 360
+
+    //当前刻度的长度
+    var scaleLength = i % 5 == 0 ? dashboardRadius - options.grid.pointerWidth / 2 : dashboardRadius - options.grid.pointerWidth / 6
+
+    //当前刻度线的坐标点
+    var point1 = calScalePoi(centerX, centerY, _angle, dashboardRadius + options.grid.pointerWidth / 2);
+    var point2 = calScalePoi(centerX, centerY, _angle, scaleLength);
+
+    ctx.beginPath()
+    ctx.setStrokeStyle('#ffffff')
+    ctx.setLineWidth(i % 5 == 0 ? 2 : 0.5)
+    ctx.moveTo(point1.x, point1.y)
+    ctx.lineTo(point2.x, point2.y)
+    ctx.stroke()
+
+    if (i % 5 == 0) {
+      var textPoint = calScalePoi(centerX, centerY, _angle, dashboardRadius - options.grid.pointerWidth);
+      ctx.setFillStyle('#000000')
+      ctx.setFontSize(10)
+      ctx.setTextAlign('center')
+      ctx.setTextBaseline('middle')
+      ctx.fillText(i / 5 * 10, textPoint.x, textPoint.y)
+    }
+  }
 
   //指示器的最大值
   var maxValue = 100
 
   //指示器指针的角度
-  var pointAngle = (pointValue / maxValue * sumAngle + beginAngle) % 360
+  var pointAngle = (pointValue / maxValue * sumAngle + options.dashboard.beginAngle) % 360
 
   //指针的路径坐标点
   var point1 = calScalePoi(centerX, centerY, pointAngle, 100);
@@ -165,17 +202,17 @@ function drawGuageChart(domSize) {
   var point4 = calScalePoi(centerX, centerY, pointAngle + 90, 10);
 
   //绘制指针
-  context.beginPath()
-  context.moveTo(point1.x, point1.y)
-  context.lineTo(point3.x, point3.y)
-  context.lineTo(point2.x, point2.y)
-  context.lineTo(point4.x, point4.y)
-  context.closePath()
-  context.stroke()
-  context.setFillStyle('green')
-  context.fill()
+  ctx.beginPath()
+  ctx.moveTo(point1.x, point1.y)
+  ctx.lineTo(point3.x, point3.y)
+  ctx.lineTo(point2.x, point2.y)
+  ctx.lineTo(point4.x, point4.y)
+  ctx.closePath()
+  ctx.stroke()
+  ctx.setFillStyle('green')
+  ctx.fill()
 
-  drawGuageScale(context, domSize)
+  drawGuageScale(ctx, domSize)
 }
 /**
  * 画刻度
@@ -221,7 +258,7 @@ function getDomSize(id, callBack) {
 function calculScale(total, x, y) {
   var temp = total;
   var count = 1;
-  
+
   while ((temp / x) > x) {
     temp = temp / x;
     count *= 10
