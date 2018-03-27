@@ -19,8 +19,8 @@ var options = {
     base: 10,//刻度之间的差值
   },
   dashboard: {
-    beginAngle: 95,
-    endAngle: 85,
+    beginAngle: 135,
+    endAngle: 45,
     stages: [{
       color: "#00CED1",
       stage: 0.1
