@@ -1,3 +1,4 @@
+//nothing
 var wxCharts = require('../../src/js/wxcharts-min.js')
 var pieChart = null;
 var app = getApp();
