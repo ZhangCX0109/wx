@@ -6,25 +6,28 @@ var options = {
   },
   series: {
     data: {
-      value: 20,
+      value: 35,
       name: '数值'
     }
   },
   scaleParams: {
-    count: 100,
+    maxValue: 60,
+    minValue: 30,
+    count: 10,
+    sub: 3,
     scales: 10,//刻度数的个数 
     base: 10,//刻度之间的差值
   },
   dashboard: {
-    beginAngle: 45,
-    endAngle: 315,
+    beginAngle: 95,
+    endAngle: 85,
     stages: [{
       color: "#00CED1",
-      stage: 0.2
+      stage: 0.1
     },
     {
       color: '#4169E1',
-      stage: 0.6
+      stage: 0.3
     },
     {
       color: '#B22222',
@@ -33,6 +36,10 @@ var options = {
       ,
     {
       color: '#B2FF22',
+      stage: 0.75
+    },
+    {
+      color: '#B2FFFF',
       stage: 1
     }]
   }
@@ -127,7 +134,7 @@ function drawGuageChart(domSize) {
   var sumAngle = options.dashboard.endAngle - options.dashboard.beginAngle
   sumAngle = sumAngle < 0 ? 360 + sumAngle : sumAngle
 
-  var count = 50;
+  var count = options.scaleParams.count * options.scaleParams.sub;
 
   //外表盘半径
   var dashboardRadius = (domSize.width - left - right) / 2
@@ -136,20 +143,34 @@ function drawGuageChart(domSize) {
   ctx.setFillStyle('#eeeeee')
   ctx.fillRect(0, 0, domSize.width, domSize.height)
 
+  //指示器指针颜色
+  var pointColor = '#ffaaaa'
+  if (options.dashboard.stages.length>0){
+    pointColor = options.dashboard.stages[0].color
+  }
+
   //前一个角度
   var prevAngle = options.dashboard.beginAngle;
 
+  var sumValue = options.scaleParams.maxValue - options.scaleParams.minValue
+
+  var prevValue = options.scaleParams.minValue
+
+
   //仪表板宽度
   ctx.setLineWidth(options.grid.pointerWidth)
-
-  //指示器指针所指向的值
-  var pointValue = 0
 
   //画外表盘
   for (var i = 0; i < options.dashboard.stages.length; i++) {
     ctx.beginPath()
     //设置仪表盘颜色
     ctx.setStrokeStyle(options.dashboard.stages[i].color)
+
+    var currValue = sumValue * options.dashboard.stages[i].stage + options.scaleParams.minValue
+    if(options.series.data.value > prevValue && options.series.data.value <= currValue){
+      pointColor = options.dashboard.stages[i].color
+    }
+    prevValue = currValue
 
     //此阶段的角度
     var stageEndAngle = (options.dashboard.beginAngle + sumAngle * options.dashboard.stages[i].stage) % 360
@@ -159,14 +180,22 @@ function drawGuageChart(domSize) {
     prevAngle = stageEndAngle
   }
 
+  //仪表盘刻度值的样式
+  ctx.setFillStyle('#000000')
+  ctx.setFontSize(16)
+  ctx.setTextAlign('center')
+  ctx.setTextBaseline('middle')
+
   //画刻度
   for (var i = 0; i < count + 1; i++) {
 
     //当前刻度的角度
     var _angle = (options.dashboard.beginAngle + (sumAngle / count) * i) % 360
 
+    var isMain = i % options.scaleParams.sub == 0
+
     //当前刻度的长度
-    var scaleLength = i % 5 == 0 ? dashboardRadius - options.grid.pointerWidth / 2 : dashboardRadius - options.grid.pointerWidth / 6
+    var scaleLength = isMain ? dashboardRadius - options.grid.pointerWidth / 2 : dashboardRadius - options.grid.pointerWidth / 6
 
     //当前刻度线的坐标点
     var point1 = calScalePoi(centerX, centerY, _angle, dashboardRadius + options.grid.pointerWidth / 2);
@@ -174,26 +203,20 @@ function drawGuageChart(domSize) {
 
     ctx.beginPath()
     ctx.setStrokeStyle('#ffffff')
-    ctx.setLineWidth(i % 5 == 0 ? 2 : 0.5)
+    ctx.setLineWidth(isMain ? 2 : 0.5)
     ctx.moveTo(point1.x, point1.y)
     ctx.lineTo(point2.x, point2.y)
     ctx.stroke()
 
-    if (i % 5 == 0) {
+    if (isMain) {
       var textPoint = calScalePoi(centerX, centerY, _angle, dashboardRadius - options.grid.pointerWidth);
-      ctx.setFillStyle('#000000')
-      ctx.setFontSize(10)
-      ctx.setTextAlign('center')
-      ctx.setTextBaseline('middle')
-      ctx.fillText(i / 5 * 10, textPoint.x, textPoint.y)
+      var scaleText = Math.floor( options.scaleParams.minValue + (i / count * sumValue))
+      ctx.fillText(scaleText, textPoint.x, textPoint.y)
     }
   }
 
-  //指示器的最大值
-  var maxValue = 100
-
   //指示器指针的角度
-  var pointAngle = (pointValue / maxValue * sumAngle + options.dashboard.beginAngle) % 360
+  var pointAngle = ((options.series.data.value - options.scaleParams.minValue) / sumValue * sumAngle + options.dashboard.beginAngle) % 360
 
   //指针的路径坐标点
   var point1 = calScalePoi(centerX, centerY, pointAngle, 100);
@@ -209,7 +232,7 @@ function drawGuageChart(domSize) {
   ctx.lineTo(point4.x, point4.y)
   ctx.closePath()
   ctx.stroke()
-  ctx.setFillStyle('green')
+  ctx.setFillStyle(pointColor)
   ctx.fill()
 
   drawGuageScale(ctx, domSize)
