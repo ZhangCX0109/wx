@@ -1,0 +1,17 @@
+<view>
+  <view class="container" style="width:{{screenWidth + 'px'}};height:{{(screenHeight - 108) / 2 + 'px'}};">
+    <text class="chart-title">摄像头信息统计</text>
+   <canvas canvas-id='pie_charts' style="height:100%;width:100%;" bindtouchstart='pieChartDidTap'></canvas>
+  </view>
+  <view class='scroll-container' >
+    <text class="chart-title">图例选择</text>
+    <scroll-view scroll-y='true' style="width:{{screenWidth + 'px'}};height:{{(screenHeight-198) / 2 + 'px'}};">
+      <checkbox-group bindchange="checkboxChange">
+        <view class='checkbox-item' wx:for="{{pieChartData}}" wx:key="{{*this}}">
+          <view class="checkbox-color-tip" style="background-color:{{item.color}}"></view>
+          <checkbox class='checkbox' value="{{item.name}}" checked="true" disabled='{{item.disabled}}'>{{item.name}}</checkbox>
+        </view>
+      </checkbox-group>
+    </scroll-view>
+  </view>
+</view>

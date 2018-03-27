@@ -1,0 +1,69 @@
+/* page/components/components.wxss */
+.section-title{
+  color: red;
+  text-align: center;
+}
+#red{
+  background-color: red;
+}
+#blue{
+  background-color: blue;
+}
+#yellow{
+  background-color: yellow;
+}
+#green{
+  background-color: green;
+}
+#red_H{
+  background-color: red;
+}
+#blue_H{
+  background-color: blue;
+}
+#yellow_H{
+  background-color: yellow;
+}
+#green_H{
+  background-color: green;
+}
+.scroll-view-item{
+  height: 100%;
+}
+.scroll-view-item_H{
+  width: 100%;
+  height:200px;
+  display: inline-block;
+}
+.slide-image{
+  height: 100%;
+  width: 100%;
+}
+
+/*cover-view  */
+.controls {
+  position: relative;
+  top: 92%;
+  height: 50px;
+  margin-top: -25px;
+  display: flex;
+}
+.play,.pause,.time {
+  flex: 1;
+  height: 100%;
+}
+.time {
+  text-align: center;
+  background-color: rgba(0, 0, 0, .5);
+  color: white;
+  line-height: 50px;
+}
+.img {
+  width: 40px;
+  height: 40px;
+  margin: 5px auto;
+}
+#myVideo{
+  width : 100%;
+  height:300px;
+}

@@ -1,0 +1,47 @@
+{
+  "pages":[
+    "page/home/home",        
+    "page/mine/mine",
+    "page/components/components",
+    "page/charts/charts_test"
+  ],
+  "window":{ 
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor" : "#66b110",
+    "navigationBarTitleText":"RESUME",
+    "navigationBarTextStyle" : "black"
+  },
+  "tabBar" : {
+    "list" : [
+      {
+        "pagePath": "page/home/home",
+        "text": "首页",
+        "iconPath":"src/imgs/tabbar_home.png",
+        "selectedIconPath": "src/imgs/tabbar_home_selected.png"
+      },{
+        "pagePath":"page/mine/mine",
+        "text":"canvas",
+        "iconPath": "src/imgs/tabbar_mine.png",
+        "selectedIconPath":"src/imgs/tabbar_mine_selected.png"
+      },{
+        "pagePath": "page/components/components",
+        "text": "组件",
+        "iconPath": "src/imgs/tabbar_mine.png",
+        "selectedIconPath": "src/imgs/tabbar_mine_selected.png"
+      },
+      {
+        "pagePath": "page/charts/charts_test",
+        "text": "图表",
+        "iconPath": "src/imgs/icon_charts.png",
+        "selectedIconPath": "src/imgs/icon_charts_selected.png"
+      }
+    ],
+    "backgroundColor": "#66a110",
+    "color":"#e6e6e6",
+    "selectedColor":"#d4237a"
+  },
+  "networkTimeout":{
+    "request":10000,
+    "downloadFile":10000
+  }
+}

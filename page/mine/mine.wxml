@@ -1,0 +1,1 @@
+<canvas id='canvas_learn_first' canvas-id="canvas_learn_first" style="width:{{width + 'px'}};height:{{(height - 127)+ 'px'}};"  bindtouchstart='columnChartDidTap'></canvas>

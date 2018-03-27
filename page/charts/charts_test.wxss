@@ -1,0 +1,27 @@
+/* page/charts/charts_test.wxss */
+.chart-title{
+  margin: 2px 0 2px 10px;
+  height: 26px;
+  font-family: cursive;
+}
+.checkbox-item{
+  font-size: 30rpx;
+  font-family: courier;
+  padding-left: 20px;
+  height: 40px;
+  border-width: 1rpx;
+  border-bottom-style: solid;
+  border-bottom-color: lavender;
+  vertical-align: middle;
+}
+.checkbox-color-tip{
+  width : 30px;
+  height : 20px;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.checkbox{
+  height : 20px;
+  margin-top: 10px;
+}
