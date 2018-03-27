@@ -144,6 +144,37 @@ function drawGuageChart(domSize) {
       context.fillText(i / 5 * 10, textPoint.x, textPoint.y)
     }
   }
+
+  //中心点坐标
+  var centerX = domSize.width / 2
+  var centerY = domSize.height / 2
+
+  //指示器指针所指向的值
+  var pointValue = 0
+
+  //指示器的最大值
+  var maxValue = 100
+
+  //指示器指针的角度
+  var pointAngle = (pointValue / maxValue * sumAngle + beginAngle) % 360
+
+  //指针的路径坐标点
+  var point1 = calScalePoi(centerX, centerY, pointAngle, 100);
+  var point2 = calScalePoi(centerX, centerY, pointAngle - 180, 30);
+  var point3 = calScalePoi(centerX, centerY, pointAngle - 90, 10);
+  var point4 = calScalePoi(centerX, centerY, pointAngle + 90, 10);
+
+  //绘制指针
+  context.beginPath()
+  context.moveTo(point1.x, point1.y)
+  context.lineTo(point3.x, point3.y)
+  context.lineTo(point2.x, point2.y)
+  context.lineTo(point4.x, point4.y)
+  context.closePath()
+  context.stroke()
+  context.setFillStyle('green')
+  context.fill()
+
   drawGuageScale(context, domSize)
 }
 /**
