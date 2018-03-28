@@ -1,8 +1,8 @@
 {
   "pages":[
+     "page/components/components",        
     "page/home/home",        
     "page/mine/mine",
-    "page/components/components",
     "page/charts/charts_test"
   ],
   "window":{ 

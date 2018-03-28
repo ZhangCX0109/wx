@@ -1,46 +1,9 @@
-<!-- scroll-view  -->
-<view>
-  <view class='section-title'>vertical-scroll-view</view>
-  <scroll-view scroll-y="true" style="height:200px" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll"
-               scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-    <view id="green" class="scroll-view-item bc_green"></view>
-    <view id="red" class="scroll-view-item bc_red"></view>
-    <view id="yellow" class="scroll-view-item bc_yellow"></view>
-    <view id="blue" class="scroll-view-item bc_blue"></view>             
-  </scroll-view>
-  <view class='section-title'>horizontal-scroll-view</view>
-  <scroll-view scroll-x="true" style='width:100%; display:flex; white-space: nowrap;' id="horizontal_scroll_view">
-    <view id="green_H" class="scroll-view-item_H bc_green"></view>
-    <view id="red_H" class="scroll-view-item_H bc_red"></view>
-    <view id="yellow_H" class="scroll-view-item_H bc_yellow"></view>
-    <view id="blue_H" class="scroll-view-item_H bc_blue"></view> 
-  </scroll-view>
-  <view class='section-title'>swiper</view>
-  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval='{{interval}}' duration='{{duration}}'>
-    <block wx:for="{{imgUrls}}" wx:key="{{*this}}">
-      <swiper-item>
-        <image src='{{item}}' class='slide-image' bindtap='imgDidTap'></image>
-      </swiper-item>
-    </block>
-  </swiper>
-  <view class='section-title'>movable-view</view>
-  <movable-area style="height:200px;width : 200px;background:red;">
-    <movable-view style='height:50px;width:50px;background:blue'direction="all"></movable-view>
-  </movable-area>
-  <movable-area style="height: 200px; width: 200px; background: red;" scale-area>
-    <movable-view style="height: 50px; width: 50px; background: blue;" direction="all" bindchange="onChange" bindscale="onScale" scale scale-min="0.5" scale-max="4" scale-value="2">
-    </movable-view>
-  </movable-area>
-  <view class='section-title'>cover-view:覆盖在原生组件之上的文本试图</view>
-  <video id="myVideo" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" controls="{{false}}" event-model="bubble">
-  <cover-view class="controls">
-    <cover-view class="play" bindtap="play">
-      <cover-image class="img" src="../../src/imgs/tabbar_home.png" />
-    </cover-view>
-    <cover-view class="pause" bindtap="pause">
-      <cover-image class="img" src="../../src/imgs/tabbar_mine.png" />
-    </cover-view>
-    <cover-view class="time">00:00</cover-view>
-  </cover-view>
-</video>
+<view id="container" style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}}">
+  <view class="container-left" style="width:{{menuWidth + 'px'}};height:{{screenHeight + 'px'}};left : {{menuLeft + 'px'}}">
+    <button bindtap='clickMe'>菜单</button>
+  </view>
+  <view class="container-right" style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}};">
+    <button bindtap='clickMe'>点我</button>
+    <button bindtap='clickMe1'>点我1</button>
+  </view>
 </view>

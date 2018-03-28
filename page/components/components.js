@@ -1,34 +1,71 @@
 // page/components/components.js
-var order = ['red', 'yellow', 'blue', 'green', 'red']
+var app = getApp()
+var eLog = 2.7183
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    toView:'red',
-    scrollTop:100,
-    imgUrls: [
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-    ],
-    indicatorDots: true,
-    autoplay: true,
-    interval: 3000,
-    duration: 1000
+    screenWidth: app.globalData.screenWidth,
+    screenHeight: app.globalData.screenHeight,
+    menuWidth: app.globalData.screenWidth * 2 / 3,
+    menuLeft: -app.globalData.screenWidth * 2 / 3
   },
-  upper: function (e) {
-    console.log(e)
+  clickMe : function(e){
+    var _this = this
+    var flag = this.data.menuLeft >= -10 ? -1 : 1;
+    var fps = 20;
+    var time = 600;
+    var logDvalue = (eLog - 1) / fps
+    var count = 0;
+    var menuLeft = this.data.menuLeft
+   // console.log(flag)
+    console.log('')
+
+    var timer = setInterval(function (){
+      ++count;
+      if(count == fps){
+        clearInterval(timer)
+      }
+      var l = Math.log((eLog - 1) * (count / fps) + 1) 
+      l = menuLeft + _this.data.menuWidth * l * flag
+    
+
+      l = Math.pow( (Math.sin((count / fps ) * 0.5 * Math.PI) ),5) 
+      console.log(l)
+      l = l * _this.data.menuWidth * flag + menuLeft
+    //  console.log(l)
+      var newMenuLeft = menuLeft +  _this.data.menuWidth * Math.log(1 + logDvalue * count) * flag;
+      //console.log(newMenuLeft)
+      _this.setData({
+        menuLeft: l
+      })
+    },time / fps)
   },
-  lower: function (e) {
-    console.log(e)
-  },
-  scroll: function (e) {
-    console.log(e)
-  },
-  imgDidTap : function (e){
-    console.log(e.target.id);
+  clickMe1 : function (e) {
+    var _this = this
+    var flag = this.data.menuLeft >= -10 ? -1 : 1;
+    var fps = 20;
+    var time = 200;
+    var logDvalue = (eLog - 1) / fps
+    var count = 0;
+    var menuLeft = this.data.menuLeft
+    // console.log(flag)
+    console.log('')
+    var timer = setInterval(function () {
+      ++count;
+      if (count == fps) {
+        clearInterval(timer)
+      }
+      var l = (count / fps) * _this.data.menuWidth * flag + menuLeft
+      //  console.log(l)
+      var newMenuLeft = menuLeft + _this.data.menuWidth * Math.log(1 + logDvalue * count) * flag;
+      //console.log(newMenuLeft)
+      _this.setData({
+        menuLeft: l
+      })
+    }, time / fps)
   },
   /**
    * 生命周期函数--监听页面加载
@@ -41,13 +78,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.videoCtx = wx.createVideoContext('myVideo')
-  },
-  play() {
-    this.videoCtx.play()
-  },
-  pause() {
-    this.videoCtx.pause()
   },
   /**
    * 生命周期函数--监听页面显示
