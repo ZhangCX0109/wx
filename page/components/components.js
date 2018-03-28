@@ -9,31 +9,28 @@ Page({
   data: {
     screenWidth: app.globalData.screenWidth,
     screenHeight: app.globalData.screenHeight,
-    menuWidth: app.globalData.screenWidth * 2 / 3,
-    menuLeft: -app.globalData.screenWidth * 2 / 3
+    menuWidth: app.globalData.screenWidth * 5 / 6,
+    menuLeft: -app.globalData.screenWidth * 5 / 6
   },
   clickMe: function (e) {
     var _this = this
-    var flag = this.data.menuLeft >= -10 ? -1 : 1;
-    var fps = 50;
-    var time = 1200;
-    var logDvalue = (eLog - 1) / fps
+    var flag = this.data.menuLeft >= -0 ? -1 : 1;
+    var fps = 36;
+    var time = 1000;
     var count = 0;
     var menuLeft = this.data.menuLeft
-    // console.log(flag)
-    console.log('')
 
-      var l
+    var l
     var timer = setInterval(function () {
       ++count;
       if (count == fps) {
         clearInterval(timer)
       }
 
-      l = Math.pow((Math.cos((count / fps) * Math.PI) + 1) / 2, 4)  
+      l = Math.pow((Math.cos((count / fps) * Math.PI) + 1) / 2, 3)
       l = 1 - l
       var l1 = l * _this.data.menuWidth * flag + menuLeft
-  
+
 
       console.log(l)
       _this.setData({
@@ -49,7 +46,6 @@ Page({
     var logDvalue = (eLog - 1) / fps
     var count = 0;
     var menuLeft = this.data.menuLeft
-    // console.log(flag)
     console.log('')
     var timer = setInterval(function () {
       ++count;
@@ -57,9 +53,6 @@ Page({
         clearInterval(timer)
       }
       var l = (count / fps) * _this.data.menuWidth * flag + menuLeft
-      //  console.log(l)
-      var newMenuLeft = menuLeft + _this.data.menuWidth * Math.log(1 + logDvalue * count) * flag;
-      //console.log(newMenuLeft)
       _this.setData({
         menuLeft: l
       })
