@@ -30,9 +30,11 @@ Page({
       if (count == fps) {
         clearInterval(timer)
       }
+
       menuPercent = utils.linearPercentage(count,fps,4)
       var menuPoi = menuPercent * _this.data.menuWidth * flag + menuLeft
       var shadowPoi = menuPercent * _this.data.screenWidth * flag + shadowLeft
+
       _this.setData({
         menuLeft: menuPoi,
         shadowLeft : shadowPoi
