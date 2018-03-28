@@ -1,4 +1,6 @@
 // page/components/components.js
+var utils = require('../../utils/utils.js')
+
 var app = getApp()
 var eLog = 2.7183
 Page({
@@ -10,58 +12,30 @@ Page({
     screenWidth: app.globalData.screenWidth,
     screenHeight: app.globalData.screenHeight,
     menuWidth: app.globalData.screenWidth * 2 / 3,
-    menuLeft: -app.globalData.screenWidth * 2 / 3
+    menuLeft: -app.globalData.screenWidth * 2 / 3,
+    shadowLeft: -app.globalData.screenWidth
   },
   clickMe: function (e) {
     var _this = this
     var flag = this.data.menuLeft >= -10 ? -1 : 1;
     var fps = 50;
     var time = 1200;
-    var logDvalue = (eLog - 1) / fps
     var count = 0;
     var menuLeft = this.data.menuLeft
-    // console.log(flag)
-    console.log('')
+    var shadowLeft = this.data.shadowLeft
 
-      var l
+    var menuPercent
     var timer = setInterval(function () {
       ++count;
       if (count == fps) {
         clearInterval(timer)
       }
-
-      l = Math.pow((Math.cos((count / fps) * Math.PI) + 1) / 2, 4)  
-      l = 1 - l
-      var l1 = l * _this.data.menuWidth * flag + menuLeft
-  
-
-      console.log(l)
+      menuPercent = utils.linearPercentage(count,fps,4)
+      var menuPoi = menuPercent * _this.data.menuWidth * flag + menuLeft
+      var shadowPoi = menuPercent * _this.data.screenWidth * flag + shadowLeft
       _this.setData({
-        menuLeft: l1
-      })
-    }, time / fps)
-  },
-  clickMe1: function (e) {
-    var _this = this
-    var flag = this.data.menuLeft >= -10 ? -1 : 1;
-    var fps = 20;
-    var time = 200;
-    var logDvalue = (eLog - 1) / fps
-    var count = 0;
-    var menuLeft = this.data.menuLeft
-    // console.log(flag)
-    console.log('')
-    var timer = setInterval(function () {
-      ++count;
-      if (count == fps) {
-        clearInterval(timer)
-      }
-      var l = (count / fps) * _this.data.menuWidth * flag + menuLeft
-      //  console.log(l)
-      var newMenuLeft = menuLeft + _this.data.menuWidth * Math.log(1 + logDvalue * count) * flag;
-      //console.log(newMenuLeft)
-      _this.setData({
-        menuLeft: l
+        menuLeft: menuPoi,
+        shadowLeft : shadowPoi
       })
     }, time / fps)
   },

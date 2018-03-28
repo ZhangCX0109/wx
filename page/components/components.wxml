@@ -1,8 +1,9 @@
 <view id="container" style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}}">
-  <view class="container-left" style="width:{{menuWidth + 'px'}};height:{{screenHeight + 'px'}};left : {{menuLeft + 'px'}}">
+  <view id="shadow_view" style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}};left : {{shadowLeft + 'px'}}"></view>
+  <view id="container_left" style="width:{{menuWidth + 'px'}};height:{{screenHeight + 'px'}};left : {{menuLeft + 'px'}}">
     <button bindtap='clickMe'>菜单</button>
   </view>
-  <view class="container-right" style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}};">
+  <view id="container_right" style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}};">
     <button bindtap='clickMe'>点我</button>
     <button bindtap='clickMe1'>点我1</button>
   </view>
