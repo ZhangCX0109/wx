@@ -23,17 +23,17 @@ Page({
     // console.log(flag)
     console.log('')
 
-    var l
+      var l
     var timer = setInterval(function () {
       ++count;
       if (count == fps) {
         clearInterval(timer)
       }
 
-      l = Math.pow((Math.cos((count / fps) * Math.PI) + 1) / 2, 4)
+      l = Math.pow((Math.cos((count / fps) * Math.PI) + 1) / 2, 4)  
       l = 1 - l
       var l1 = l * _this.data.menuWidth * flag + menuLeft
-
+  
 
       console.log(l)
       _this.setData({

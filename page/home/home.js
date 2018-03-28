@@ -149,6 +149,10 @@ function drawGuageChart(domSize) {
     pointColor = options.dashboard.stages[0].color
   }
 
+
+
+
+      ffasdfSD
   //前一个角度
   var prevAngle = options.dashboard.beginAngle;
 
