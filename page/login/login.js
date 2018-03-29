@@ -24,7 +24,7 @@ Page({
   login: function () {
     console.log(this.data.username + ':' + this.data.password)
     wx.switchTab({
-      url: '../home/home',
+      url: '../components/components',
     })
   },
   /**
