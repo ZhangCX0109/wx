@@ -1,5 +1,5 @@
 <view id="container" style="width:{{screenWidth + 'px'}};height:{{screenHeight - 49 + 'px'}}">
-  <nav id="nav" bind:leftBtnTap="leftBtnTap" title="自定义" btn-title="测试" background-color="#bbbbbb"></nav>
+ 
   <view id="container_right" style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}};">
     <button bindtap='clickMe'>点我</button>
     <button bindtap='clickMe1'>点我1</button>
