@@ -18,7 +18,7 @@ Component({
     }
   },
   methods : {
-    leftBtnDidTap : function(callBack){
+    leftBtnDidTap : function(){
       var detail = {}
       var option = {}
       this.triggerEvent('leftBtnTap',detail,option)
