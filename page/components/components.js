@@ -14,10 +14,19 @@ Page({
     menuWidth: app.globalData.screenWidth * 2 / 3,
     menuLeft: -app.globalData.screenWidth * 2 / 3,
     shadowLeft: -app.globalData.screenWidth,
-    opacity : 0.0
+    opacity : 0.0,
+    moving : false
   },
   clickMe: function (e) {
     var _this = this
+
+    if (_this.data.moving){
+      console.log('return')
+      return;
+    }
+    
+    this.setData({moving : true})
+
     var flag = this.data.menuLeft >= -10 ? -1 : 1;
     var fps = 30;
     var time = 500;
@@ -36,6 +45,7 @@ Page({
       ++count;
       if (count > frameCount) {
         clearInterval(timer)
+        _this.setData({ moving: false })
       }
 
       menuPercent = utils.linearPercentage(count, fps, 4)
@@ -45,8 +55,19 @@ Page({
         menuLeft: menuPoi,
         opacity: (count / frameCount * 0.7)
       })
+
+      if(flag > 0){
+        this.cancelMenu = function(){
+          console.log('cancel')
+        }
+      }else{
+        this.cancelMenu = null
+      }
     }, 1000 / fps)
+
+    
   },
+
   /**
    * 生命周期函数--监听页面加载
    */
