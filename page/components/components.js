@@ -13,7 +13,8 @@ Page({
     screenHeight: app.globalData.screenHeight,
     menuWidth: app.globalData.screenWidth * 2 / 3,
     menuLeft: -app.globalData.screenWidth * 2 / 3,
-    shadowLeft: -app.globalData.screenWidth
+    shadowLeft: -app.globalData.screenWidth,
+    opacity : 0.0
   },
   clickMe: function (e) {
     var _this = this
@@ -23,23 +24,28 @@ Page({
     var count = 0;
     var menuLeft = this.data.menuLeft
     var shadowLeft = this.data.shadowLeft
+    var frameCount = time / 1000 * fps
+
+    var shadowPoi = flag > 0 ? 0 : -_this.data.menuWidth * 2
+    _this.setData({
+      shadowLeft: shadowPoi
+    })
 
     var menuPercent
     var timer = setInterval(function () {
       ++count;
-      if (count == fps) {
+      if (count > frameCount) {
         clearInterval(timer)
       }
 
-      menuPercent = utils.linearPercentage(count,fps,4)
+      menuPercent = utils.linearPercentage(count, fps, 4)
       var menuPoi = menuPercent * _this.data.menuWidth * flag + menuLeft
-      var shadowPoi = menuPercent * _this.data.screenWidth * flag + shadowLeft
 
       _this.setData({
         menuLeft: menuPoi,
-        shadowLeft : shadowPoi
+        opacity: (count / frameCount * 0.7)
       })
-    }, time / fps)
+    }, 1000 / fps)
   },
   /**
    * 生命周期函数--监听页面加载
