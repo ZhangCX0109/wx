@@ -2,7 +2,8 @@
 #container{
   /* display: flex;
   flex-direction: row; */
-  position: relative
+  position: relative;
+  overflow-y: hidden;
 }
 #shadow_view{
   position:absolute;
@@ -12,15 +13,11 @@
 }
 #container_left{
   background-color: blue;
-  z-index: 10;
+  z-index: 100000000000000000000000000000000000;
   position: absolute;
   top : 0;
 }
 #container_right{
   background-color: red;
   z-index: 1;
-  position: absolute;
-  top : 0;
-  right: 0;
 }
-

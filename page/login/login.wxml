@@ -1,0 +1,5 @@
+<view class='container' style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}}">
+  <input bindinput="usernameInput" class='input-name input' placeholder='请输入用户名' adjust-position='true'></input>
+  <input bindinput="passwordInput" class='input-pass input' placeholder='请输入密码'   adjust-position='true' password='true'></input>
+  <button bindtap='login' class='btn-login'>登陆</button>
+</view>

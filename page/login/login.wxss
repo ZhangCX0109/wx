@@ -1,0 +1,19 @@
+/* page/login/login.wxss */
+.container{
+  text-align: center;
+  background-color: blue;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.input{
+    background: white;
+    margin-top: 50px;
+    height: 40px;
+    border-radius: 4px;
+}
+.btn-login{
+  margin-top: 50px;
+}
