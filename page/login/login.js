@@ -22,7 +22,7 @@ Page({
     })
   },
   login: function () {
-    //console.log(this.data.username + ':' + this.data.password)
+    console.log(this.data.username + ':' + this.data.password)
     wx.switchTab({
       url: '../components/components',
     })
