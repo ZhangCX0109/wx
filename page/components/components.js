@@ -83,6 +83,7 @@ Page({
     this.nav = this.selectComponent('#nav')
   },
   leftBtnTap(){
+    console.log('left')
     this.clickMe();
   },
   /**
