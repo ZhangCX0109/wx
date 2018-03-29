@@ -1,0 +1,4 @@
+<view class="nav-container" style="background-color:{{backgroundColor}}">
+  <button style="background-color:{{backgroundColor}}" bindtap="leftBtnDidTap"  class="nav-left-btn">{{btnTitle}}</button>
+  <text class="nav-text">{{title}}</text>
+</view>

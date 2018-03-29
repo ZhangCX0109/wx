@@ -18,8 +18,8 @@ Page({
   clickMe: function (e) {
     var _this = this
     var flag = this.data.menuLeft >= -10 ? -1 : 1;
-    var fps = 50;
-    var time = 1200;
+    var fps = 30;
+    var time = 500;
     var count = 0;
     var menuLeft = this.data.menuLeft
     var shadowLeft = this.data.shadowLeft
@@ -52,6 +52,11 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    //获得自定义组件
+    this.nav = this.selectComponent('#nav')
+  },
+  leftBtnTap(){
+    this.clickMe();
   },
   /**
    * 生命周期函数--监听页面显示
