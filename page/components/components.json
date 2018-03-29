@@ -1,6 +1,3 @@
 {
-  "navigationBarTitleText": "组件",
-  "usingComponents" : {
-      "nav": "../../commons/nav-top/nav_top"
-  }
+  "navigationBarTitleText": "组件"
 }
