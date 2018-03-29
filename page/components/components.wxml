@@ -1,5 +1,5 @@
 <view id="container" style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}}">
-  <view id="shadow_view" style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}};left : {{shadowLeft + 'px'}}"></view>
+  <view id="shadow_view" style="width:{{screenWidth + 'px'}};height:{{screenHeight + 'px'}};left : {{shadowLeft + 'px'}}; opacity : {{opacity}}"></view>
   <view id="container_left" style="width:{{menuWidth + 'px'}};height:{{screenHeight + 'px'}};left : {{menuLeft + 'px'}}">
     <button bindtap='clickMe'>菜单</button>
   </view>

@@ -9,7 +9,6 @@
   background-color: gray;
   z-index: 5;
   top : 0;
-  opacity: 0.5
 }
 #container_left{
   background-color: blue;
