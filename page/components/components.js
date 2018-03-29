@@ -1,4 +1,6 @@
 // page/components/components.js
+var utils = require('../../utils/utils.js')
+
 var app = getApp()
 var eLog = 2.7183
 Page({
@@ -9,52 +11,33 @@ Page({
   data: {
     screenWidth: app.globalData.screenWidth,
     screenHeight: app.globalData.screenHeight,
-    menuWidth: app.globalData.screenWidth * 5 / 6,
-    menuLeft: -app.globalData.screenWidth * 5 / 6
+    menuWidth: app.globalData.screenWidth * 2 / 3,
+    menuLeft: -app.globalData.screenWidth * 2 / 3,
+    shadowLeft: -app.globalData.screenWidth
   },
   clickMe: function (e) {
     var _this = this
-    var flag = this.data.menuLeft >= -0 ? -1 : 1;
-    var fps = 36;
-    var time = 1000;
-    var count = 0;
-    var menuLeft = this.data.menuLeft
-
-    var l
-    var timer = setInterval(function () {
-      ++count;
-      if (count == fps) {
-        clearInterval(timer)
-      }
-
-      l = Math.pow((Math.cos((count / fps) * Math.PI) + 1) / 2, 3)
-      l = 1 - l
-      var l1 = l * _this.data.menuWidth * flag + menuLeft
-
-
-      console.log(l)
-      _this.setData({
-        menuLeft: l1
-      })
-    }, time / fps)
-  },
-  clickMe1: function (e) {
-    var _this = this
     var flag = this.data.menuLeft >= -10 ? -1 : 1;
-    var fps = 20;
-    var time = 200;
-    var logDvalue = (eLog - 1) / fps
+    var fps = 50;
+    var time = 1200;
     var count = 0;
     var menuLeft = this.data.menuLeft
-    console.log('')
+    var shadowLeft = this.data.shadowLeft
+
+    var menuPercent
     var timer = setInterval(function () {
       ++count;
       if (count == fps) {
         clearInterval(timer)
       }
-      var l = (count / fps) * _this.data.menuWidth * flag + menuLeft
+
+      menuPercent = utils.linearPercentage(count,fps,4)
+      var menuPoi = menuPercent * _this.data.menuWidth * flag + menuLeft
+      var shadowPoi = menuPercent * _this.data.screenWidth * flag + shadowLeft
+
       _this.setData({
-        menuLeft: l
+        menuLeft: menuPoi,
+        shadowLeft : shadowPoi
       })
     }, time / fps)
   },

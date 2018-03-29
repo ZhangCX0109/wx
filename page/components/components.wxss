@@ -4,13 +4,20 @@
   flex-direction: row; */
   position: relative
 }
-.container-left{
+#shadow_view{
+  position:absolute;
+  background-color: gray;
+  z-index: 5;
+  top : 0;
+  opacity: 0.5
+}
+#container_left{
   background-color: blue;
   z-index: 10;
   position: absolute;
   top : 0;
 }
-.container-right{
+#container_right{
   background-color: red;
   z-index: 1;
   position: absolute;
