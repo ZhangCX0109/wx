@@ -14,18 +14,18 @@ Page({
     menuWidth: app.globalData.screenWidth * 2 / 3,
     menuLeft: -app.globalData.screenWidth * 2 / 3,
     shadowLeft: -app.globalData.screenWidth,
-    opacity : 0.0,
-    moving : false
+    opacity: 0.0,
+    moving: false
   },
   clickMe: function (e) {
     var _this = this
 
-    if (_this.data.moving){
+    if (_this.data.moving) {
       console.log('return')
       return;
     }
-    
-    this.setData({moving : true})
+
+    this.setData({ moving: true })
 
     var flag = this.data.menuLeft >= -10 ? -1 : 1;
     var fps = 50;
@@ -35,10 +35,11 @@ Page({
     var shadowLeft = this.data.shadowLeft
     var frameCount = time / 1000 * fps
 
-    var shadowPoi = flag > 0 ? 0 : -_this.data.menuWidth * 2
-    _this.setData({
-      shadowLeft: shadowPoi
-    })
+    if (flag > 0) {
+      _this.setData({
+        shadowLeft: 0
+      })
+    }
 
     var menuPercent
     var timer = setInterval(function () {
@@ -46,26 +47,25 @@ Page({
       if (count > frameCount) {
         clearInterval(timer)
         _this.setData({ moving: false })
+        if (flag < 0) {
+          _this.setData({
+            shadowLeft: -_this.data.menuWidth*2
+          })
+        }
       }
 
       menuPercent = utils.linearPercentage(count, fps, 4)
+
       var menuPoi = menuPercent * _this.data.menuWidth * flag + menuLeft
 
       _this.setData({
         menuLeft: menuPoi,
-        opacity: (count / frameCount * 0.7)
+        opacity: flag>0?(count / frameCount * 0.7):((1 - count / frameCount) * 0.7)
       })
 
-      if(flag > 0){
-        this.cancelMenu = function(){
-          console.log('cancel')
-        }
-      }else{
-        this.cancelMenu = null
-      }
     }, 1000 / fps)
 
-    
+
   },
 
   /**
