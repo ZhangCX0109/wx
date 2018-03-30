@@ -32,8 +32,10 @@ Page({
       url: 'responseCodes',
       method: 'GET',
       success: function (res) {
+        
         console.log('data'+JSON.stringify(res.data))
         console.log('statusCode' + res.statusCode)
+        
         if (res.statusCode == 2000) {
           codes = res.data
           //data : Array<{
