@@ -21,7 +21,6 @@ Page({
     var _this = this
 
     if (_this.data.moving) {
-      console.log('return')
       return;
     }
 
@@ -34,13 +33,11 @@ Page({
     var menuLeft = this.data.menuLeft
     var shadowLeft = this.data.shadowLeft
     var frameCount = time / 1000 * fps
-
     if (flag > 0) {
       _this.setData({
         shadowLeft: 0
       })
     }
-    console.log(this.data.menuWidth)
     var menuPercent
     var timer = setInterval(function () {
       ++count;
@@ -53,21 +50,14 @@ Page({
           })
         }
       }
-
       menuPercent = utils.linearPercentage(count, fps, 4)
-
       var menuPoi = menuPercent * _this.data.menuWidth * flag + menuLeft
-      console.log(flag + ':' + menuPoi)
       _this.setData({
         menuLeft: menuPoi,
         opacity: flag>0?(count / frameCount * 0.7):((1 - count / frameCount) * 0.7)
       })
-
     }, 1000 / fps)
-
-
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
