@@ -70,7 +70,8 @@ Page({
    */
   onReady: function () {
     //获得自定义组件
-    this.nav = this.selectComponent('#nav')
+    this.nav = this.selectComponent('#nav');
+    this.listview = this.selectComponent('#list-view')
   },
   leftBtnTap(){
     console.log('left')

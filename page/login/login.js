@@ -29,6 +29,7 @@ Page({
     var _this = this
     wx.showLoading({
       title: '正在登陆',
+      mask : true
     })
     //console.log(this.data.username + ':' + this.data.password)
     requestUtils.request({
@@ -40,6 +41,7 @@ Page({
       },
       success: function (res) {
         wx.hideLoading()
+        console.log(app.globalData.resCodes[res.statusCode])
         if (app.globalData.resCodes[res.statusCode].ok){
           wx.switchTab({
             url: '../components/components',
@@ -53,7 +55,10 @@ Page({
             data: _this.data.password,
           })
         }else{
-          console.log('错误')
+          wx.showToast({
+            title: app.globalData.resCodes[res.statusCode].desc,
+            icon : 'none'
+          })
         }
       }
     })
