@@ -2,6 +2,7 @@
 var app = getApp()
 
 var requestUtils = require('../../utils/request-util.js')
+var codes
 
 Page({
 
@@ -30,18 +31,20 @@ Page({
     requestUtils.request({
       url: 'responseCodes',
       method: 'GET',
-      data: {
-        name: 'admin',
-        pass: 'admin'
-      },
-      success: function (data, statusCode, header) {
-        if (statusCode == 200) {
+      success: function (res) {
+        console.log('data'+JSON.stringify(res.data))
+        console.log('statusCode' + res.statusCode)
+        if (res.statusCode == 2000) {
+          codes = res.data
           //data : Array<{
           //  code, 应答码
           //  desc  应答描述
           // }
+          for (var i = 0; i < res.data.length; i++){
+            console.log(res.data[i])
+          }
         } else {
-          console.log('错误')
+          console.log('错误:' + res.statusCode)
         }
       }
     })
@@ -53,13 +56,17 @@ Page({
         name: 'admin',
         pass: 'admin'
       },
-      success: function (data, statusCode, header) {
-        if (statusCode == 200) {
-          wx.switchTab({
-            url: '../components/components',
-          })
-        } else {
-          console.log('错误')
+      success: function (res) {
+        for(var i = 0; i < codes.length; i++){
+          if(codes[i].code = res.statusCode){
+            if(codes[i].ok){
+              wx.switchTab({
+                url: '../components/components',
+              })
+            }else{
+              console.log('错误')
+            }
+          }
         }
       }
     })
