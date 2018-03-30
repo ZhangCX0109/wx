@@ -60,8 +60,9 @@ Page({
       },
       success: function (res) {
         for(var i = 0; i < codes.length; i++){
-          if(codes[i].code = res.statusCode){
+          if(codes[i].code == res.statusCode){
             if(codes[i].ok){
+              console.log(codes[i].desc)
               wx.switchTab({
                 url: '../components/components',
               })
