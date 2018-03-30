@@ -6,7 +6,7 @@ var options = {
   },
   series: {
     data: {
-      value: 35,
+      value: 54,
       name: '数值'
     }
   },
@@ -15,8 +15,6 @@ var options = {
     minValue: 30,
     count: 10,
     sub: 3,
-    scales: 10,//刻度数的个数 
-    base: 10,//刻度之间的差值
   },
   dashboard: {
     beginAngle: 135,
@@ -40,6 +38,10 @@ var options = {
     },
     {
       color: '#B2FFFF',
+      stage: 0.85
+    },
+    {
+      color: '#B2F000',
       stage: 1
     }]
   }
