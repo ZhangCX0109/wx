@@ -27,7 +27,7 @@ Page({
 
     this.setData({ moving: true })
 
-    var flag = this.data.menuLeft >= -10 ? -1 : 1;
+    var flag = this.data.menuLeft >= -this.data.menuWidth / 2 ? -1 : 1;
     var fps = 30;
     var time = 500;
     var count = 0;
@@ -40,7 +40,7 @@ Page({
         shadowLeft: 0
       })
     }
-
+    console.log(this.data.menuWidth)
     var menuPercent
     var timer = setInterval(function () {
       ++count;
@@ -49,7 +49,7 @@ Page({
         _this.setData({ moving: false })
         if (flag < 0) {
           _this.setData({
-            shadowLeft: -_this.data.menuWidth*2
+            shadowLeft: -_this.data.screenWidth
           })
         }
       }
@@ -57,7 +57,7 @@ Page({
       menuPercent = utils.linearPercentage(count, fps, 4)
 
       var menuPoi = menuPercent * _this.data.menuWidth * flag + menuLeft
-
+      console.log(flag + ':' + menuPoi)
       _this.setData({
         menuLeft: menuPoi,
         opacity: flag>0?(count / frameCount * 0.7):((1 - count / frameCount) * 0.7)
