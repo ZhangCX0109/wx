@@ -3,6 +3,21 @@ var utils = require('../../utils/utils.js')
 
 var app = getApp()
 var eLog = 2.7183
+var listData = [{
+  text : '垃圾地方',
+  node : [
+    {
+      text: '垃圾地方',
+      node: []
+    }, {
+      text: '垃圾地方',
+      node: []
+    }, {
+      text: '垃圾地方',
+      node: []
+    }
+  ]
+}]
 Page({
 
   /**
@@ -15,7 +30,8 @@ Page({
     menuLeft: -app.globalData.screenWidth * 2 / 3,
     shadowLeft: -app.globalData.screenWidth,
     opacity: 0.0,
-    moving: false
+    moving: false,
+    listData : listData
   },
   clickMe: function (e) {
     var _this = this
