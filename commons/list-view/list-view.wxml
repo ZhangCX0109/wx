@@ -1,15 +1,15 @@
 <scroll-view>
-  <view wx:for="{{itemArr}}" wx:key="{{*this}}">{{item.text}}
+  <text wx:for="{{itemArr}}" wx:key="{{*this}}">{{item.text}}
     <block wx:if="{{item.node.length > 0}}">
-      <view wx:for="{{item.node}}" wx:key="{{*this}}">{{item.text}}
+      <text wx:for="{{item.node}}" wx:key="{{*this}}">{{item.text}}
         <block wx:if="{{item.node.length > 0}}">
-          <view wx:for="{{item.node}}" wx:key="{{*this}}">{{item.text}}
+          <text wx:for="{{item.node}}" wx:key="{{*this}}">{{item.text}}
             <block wx:if="{{item.node.length > 0}}">
-              <view wx:for="{{item.node}}" wx:key="{{*this}}">{{item.text}}</view>
+              <text wx:for="{{item.node}}" wx:key="{{*this}}">{{item.text}}</text>
             </block>
-          </view>
+          </text>
         </block>
-      </view>
+      </text>
     </block>
-  </view>
+  </text>
 </scroll-view>
