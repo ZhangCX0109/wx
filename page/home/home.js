@@ -59,15 +59,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    try {
-      var res = wx.getStorageInfoSync()
-      if (res.username == undefined){
-        console.log('不存在')
+    //根据缓存数据判断用户是否需要登陆
+    wx.getStorage({
+      key: 'username',
+      success: function (res) {
+      },
+      fail : function(res){
+        wx.redirectTo({
+          url: '../login/login',
+        })
+      },
+      complete : function(res){
+        //console.log(res)
       }
-
-    } catch (e) {
-      console.log(e)
-    }
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -142,7 +147,6 @@ function drawGuageChart(domSize) {
   //刻度总数
   var sumAngle = options.dashboard.endAngle - options.dashboard.beginAngle
   sumAngle = sumAngle < 0 ? 360 + sumAngle : sumAngle
-
   var count = options.scaleParams.count * options.scaleParams.sub;
 
   //外表盘半径
@@ -160,11 +164,8 @@ function drawGuageChart(domSize) {
 
   //前一个角度
   var prevAngle = options.dashboard.beginAngle;
-
   var sumValue = options.scaleParams.maxValue - options.scaleParams.minValue
-
   var prevValue = options.scaleParams.minValue
-
 
   //仪表板宽度
   ctx.setLineWidth(options.grid.pointerWidth)

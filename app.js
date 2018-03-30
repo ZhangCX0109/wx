@@ -5,6 +5,7 @@ App({
   },
   globalData : {
     screenWidth: wx.getSystemInfoSync().screenWidth,
-    screenHeight: wx.getSystemInfoSync().screenHeight
+    screenHeight: wx.getSystemInfoSync().screenHeight,
+    resCodes : {}
   }
 })

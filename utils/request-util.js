@@ -12,7 +12,7 @@ function request(obj) {
     return null
   }
 
-  obj.url = 'http://192.168.1.155:8080/eartheye/m/api/' + obj.url
+  obj.url = 'http://192.168.1.206:8080/eartheye/m/api/' + obj.url
 
   return wx.request(obj)
 }
