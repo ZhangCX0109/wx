@@ -1,4 +1,5 @@
 var app = getApp();
+var utils = require('../../utils/utils.js')
 var top, bottom, left, right, chartWidth, chartHeight, radius
 var options = {
   grid: {
@@ -12,7 +13,7 @@ var options = {
   },
   scaleParams: {
     maxValue: 60,
-    minValue: 30,
+    minValue: 0,
     count: 10,
     sub: 3,
   },
@@ -59,16 +60,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    try {
-      var res = wx.getStorageInfoSync()
-      if (res.username == undefined){
-        console.log('不存在')
-      }
 
-    } catch (e) {
-      console.log(e)
-    }
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -139,112 +133,138 @@ function drawGuageChart(domSize) {
   var centerX = domSize.width / 2
   var centerY = domSize.height / 2
 
-  //刻度总数
-  var sumAngle = options.dashboard.endAngle - options.dashboard.beginAngle
-  sumAngle = sumAngle < 0 ? 360 + sumAngle : sumAngle
+  //角度总数
+  var angleSum = options.dashboard.endAngle - options.dashboard.beginAngle
+  angleSum = angleSum < 0 ? 360 + angleSum : angleSum
 
-  var count = options.scaleParams.count * options.scaleParams.sub;
+  //刻度总数
+  var degreeCount = options.scaleParams.count * options.scaleParams.sub;
 
   //外表盘半径
   var dashboardRadius = (domSize.width - left - right) / 2
 
-  //填充背景
-  ctx.setFillStyle('#eeeeee')
-  ctx.fillRect(0, 0, domSize.width, domSize.height)
-
-  //指示器指针颜色
+  //指示器指针默认颜色
   var pointColor = '#ffaaaa'
-  if (options.dashboard.stages.length>0){
+  if (options.dashboard.stages.length > 0) {
     pointColor = options.dashboard.stages[0].color
   }
 
-  //前一个角度
-  var prevAngle = options.dashboard.beginAngle;
-
+  //表示值总和
   var sumValue = options.scaleParams.maxValue - options.scaleParams.minValue
 
-  var prevValue = options.scaleParams.minValue
+  var fps = 50
+
+  var time = 3000
+
+  var frameCount = time / 1000 * fps
+
+  //帧索引
+  var frameIndex = 0
 
 
-  //仪表板宽度
-  ctx.setLineWidth(options.grid.pointerWidth)
+  var timer = setInterval(function () {
 
-  //画外表盘
-  for (var i = 0; i < options.dashboard.stages.length; i++) {
-    ctx.beginPath()
-    //设置仪表盘颜色
-    ctx.setStrokeStyle(options.dashboard.stages[i].color)
+    frameIndex++;
 
-    var currValue = sumValue * options.dashboard.stages[i].stage + options.scaleParams.minValue
-    if(options.series.data.value > prevValue && options.series.data.value <= currValue){
-      pointColor = options.dashboard.stages[i].color
+    var percent = utils.linearPercentage(frameIndex, frameCount, 4)
+
+    if (frameIndex > frameCount) {
+      clearInterval(timer)
     }
-    prevValue = currValue
 
-    //此阶段的角度
-    var stageEndAngle = (options.dashboard.beginAngle + sumAngle * options.dashboard.stages[i].stage) % 360
+    //前一个角度
+    var prevAngle = options.dashboard.beginAngle;
 
-    ctx.arc(centerX, centerY, dashboardRadius, prevAngle / 180 * Math.PI, stageEndAngle / 180 * Math.PI, false)
-    ctx.stroke()
-    prevAngle = stageEndAngle
-  }
+    //上一个阶段值
+    var prevValue = options.scaleParams.minValue
 
-  //仪表盘刻度值的样式
-  ctx.setFillStyle('#000000')
-  ctx.setFontSize(16)
-  ctx.setTextAlign('center')
-  ctx.setTextBaseline('middle')
+    //仪表板宽度
+    ctx.setLineWidth(options.grid.pointerWidth)
 
-  //画刻度
-  for (var i = 0; i < count + 1; i++) {
+    //填充背景
+    ctx.setFillStyle('#eeeeee')
+    ctx.fillRect(0, 0, domSize.width, domSize.height)
 
-    //当前刻度的角度
-    var _angle = (options.dashboard.beginAngle + (sumAngle / count) * i) % 360
+    //画外表盘
+    for (var i = 0; i < options.dashboard.stages.length; i++) {
+      ctx.beginPath()
+      //设置仪表盘颜色
+      ctx.setStrokeStyle(options.dashboard.stages[i].color)
 
-    var isMain = i % options.scaleParams.sub == 0
+      var currValue = sumValue * options.dashboard.stages[i].stage + options.scaleParams.minValue
+      if (options.series.data.value  > prevValue && options.series.data.value <= currValue) {
+        pointColor = options.dashboard.stages[i].color
+      }
+      prevValue = currValue
 
-    //当前刻度的长度
-    var scaleLength = isMain ? dashboardRadius - options.grid.pointerWidth / 2 : dashboardRadius - options.grid.pointerWidth / 6
+      //此阶段的角度
+      var stageEndAngle = (options.dashboard.beginAngle + angleSum * options.dashboard.stages[i].stage) % 360
 
-    //当前刻度线的坐标点
-    var point1 = calScalePoi(centerX, centerY, _angle, dashboardRadius + options.grid.pointerWidth / 2);
-    var point2 = calScalePoi(centerX, centerY, _angle, scaleLength);
+      ctx.arc(centerX, centerY, dashboardRadius, prevAngle / 180 * Math.PI, stageEndAngle / 180 * Math.PI, false)
+      ctx.stroke()
+      prevAngle = stageEndAngle
+    }
 
+    //仪表盘刻度值的样式
+    ctx.setFillStyle('#000000')
+    ctx.setFontSize(16)
+    ctx.setTextAlign('center')
+    ctx.setTextBaseline('middle')
+
+    //画刻度
+    for (var i = 0; i < degreeCount + 1; i++) {
+
+      //当前刻度的角度
+      var _angle = (options.dashboard.beginAngle + (angleSum / degreeCount) * i) % 360
+
+      var isMain = i % options.scaleParams.sub == 0
+
+      //当前刻度的长度
+      var scaleLength = isMain ? dashboardRadius - options.grid.pointerWidth / 2 : dashboardRadius - options.grid.pointerWidth / 6
+
+      //当前刻度线的坐标点
+      var point1 = calScalePoi(centerX, centerY, _angle, dashboardRadius + options.grid.pointerWidth / 2);
+      var point2 = calScalePoi(centerX, centerY, _angle, scaleLength);
+
+      ctx.beginPath()
+      ctx.setStrokeStyle('#ffffff')
+      ctx.setLineWidth(isMain ? 2 : 0.5)
+      ctx.moveTo(point1.x, point1.y)
+      ctx.lineTo(point2.x, point2.y)
+      ctx.stroke()
+
+      if (isMain) {
+        var textPoint = calScalePoi(centerX, centerY, _angle, dashboardRadius - options.grid.pointerWidth);
+        var scaleText = Math.floor(options.scaleParams.minValue + (i / degreeCount * sumValue))
+        ctx.fillText(scaleText, textPoint.x, textPoint.y)
+      }
+    }
+
+    //指示器指针的角度
+    
+    var pointAngle = ((options.series.data.value - options.scaleParams.minValue) * percent / sumValue * angleSum + options.dashboard.beginAngle) % 360
+
+    //指针的路径坐标点
+    var point1 = calScalePoi(centerX, centerY, pointAngle, 100);
+    var point2 = calScalePoi(centerX, centerY, pointAngle - 180, 30);
+    var point3 = calScalePoi(centerX, centerY, pointAngle - 90, 10);
+    var point4 = calScalePoi(centerX, centerY, pointAngle + 90, 10);
+
+    //绘制指针
     ctx.beginPath()
-    ctx.setStrokeStyle('#ffffff')
-    ctx.setLineWidth(isMain ? 2 : 0.5)
     ctx.moveTo(point1.x, point1.y)
+    ctx.lineTo(point3.x, point3.y)
     ctx.lineTo(point2.x, point2.y)
+    ctx.lineTo(point4.x, point4.y)
+    ctx.closePath()
     ctx.stroke()
+    ctx.setFillStyle(pointColor)
+    ctx.fill()
 
-    if (isMain) {
-      var textPoint = calScalePoi(centerX, centerY, _angle, dashboardRadius - options.grid.pointerWidth);
-      var scaleText = Math.floor( options.scaleParams.minValue + (i / count * sumValue))
-      ctx.fillText(scaleText, textPoint.x, textPoint.y)
-    }
-  }
+    ctx.draw();
 
-  //指示器指针的角度
-  var pointAngle = ((options.series.data.value - options.scaleParams.minValue) / sumValue * sumAngle + options.dashboard.beginAngle) % 360
+  }, 1000 / fps)
 
-  //指针的路径坐标点
-  var point1 = calScalePoi(centerX, centerY, pointAngle, 100);
-  var point2 = calScalePoi(centerX, centerY, pointAngle - 180, 30);
-  var point3 = calScalePoi(centerX, centerY, pointAngle - 90, 10);
-  var point4 = calScalePoi(centerX, centerY, pointAngle + 90, 10);
-
-  //绘制指针
-  ctx.beginPath()
-  ctx.moveTo(point1.x, point1.y)
-  ctx.lineTo(point3.x, point3.y)
-  ctx.lineTo(point2.x, point2.y)
-  ctx.lineTo(point4.x, point4.y)
-  ctx.closePath()
-  ctx.stroke()
-  ctx.setFillStyle(pointColor)
-  ctx.fill()
-
-  drawGuageScale(ctx, domSize)
 }
 /**
  * 画刻度
