@@ -3,22 +3,84 @@ var utils = require('../../utils/utils.js')
 
 var app = getApp()
 var eLog = 2.7183
-var listData = [{
-  text : '垃圾地方',
-  node : [
-    {
-      text: '垃圾地方',
+var listData = [
+  {
+    id: 'view',
+    name: '视图容器',
+    open: false,
+    pages: ['view', 'scroll-view', 'swiper'],
+    node:[]
+  }, {
+    id: 'content',
+    name: '基础内容',
+    open: false,
+    pages: ['text', 'icon', 'progress'],
+    node: []
+  }, {
+    id: 'form',
+    name: '表单组件',
+    open: false,
+    pages: ['button', 'checkbox', 'form', 'input', 'label', 'picker', 'radio', 'slider', 'switch', 'textarea'],
+    node: []
+  }, {
+    id: 'nav',
+    name: '导航',
+    open: false,
+    pages: ['navigator'],
+    node: [{
+      id: 'view1',
+      name: '视图容器',
+      open: false,
+      pages: ['view', 'scroll-view', 'swiper'],
       node: []
     }, {
-      text: '垃圾地方',
+      id: 'content1',
+      name: '基础内容',
+      open: false,
+      pages: ['text', 'icon', 'progress'],
       node: []
     }, {
-      text: '垃圾地方',
+      id: 'form1',
+      name: '表单组件',
+      open: false,
+      pages: ['button', 'checkbox', 'form', 'input', 'label', 'picker', 'radio', 'slider', 'switch', 'textarea'],
       node: []
-    }
-  ]
-}]
+    }]
+  }, {
+    id: 'media',
+    name: '媒体组件',
+    open: false,
+    pages: ['image', 'audio', 'video'],
+    node: []
+  }, {
+    id: 'map',
+    name: '地图',
+    pages: ['map'],
+    node: []
+  }, {
+    id: 'canvas',
+    name: '画布',
+    pages: ['canvas'],
+    node: []
+  }
+]
+// var prevClickNodeIndex = [2]
+
+// var o = listDAta
+// for (var i = 0; i < prevClickNodeIndex.length;i++){
+//   o = o[prevClickNodeIndex[i]]
+// }
 Page({
+  itemDidTap : function(e){
+    console.log(e)
+    // console.log(e.target.dataset.ss[0].open = !e.target.dataset.ss[0].open)
+    // console.log(e.target.dataset.ss[0].open)
+    // console.log(this.data.listData[0].open)
+    // console.log('')
+    this.setData({
+      listData : e.detail.list
+    })
+  },
 
   /**
    * 页面的初始数据

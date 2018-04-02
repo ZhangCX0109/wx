@@ -1,8 +1,9 @@
 {
   "pages":[
-    "page/home/home",
+        "page/home/home",
+        
+    "page/components/components",
     "page/login/login",
-    "page/components/components",        
     "page/mine/mine",
     "page/charts/charts_test"
   ],

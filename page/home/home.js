@@ -67,7 +67,7 @@ Page({
       },
       fail : function(res){
         wx.redirectTo({
-          url: '../login/login',
+          //url: '../login/login',
         })
       },
       complete : function(res){

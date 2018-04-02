@@ -8,5 +8,5 @@
 <view bindtap='clickMe' id="shadow_view" style="width:{{screenWidth + 'px'}};height:{{screenHeight - 49 + 'px'}};left : {{shadowLeft + 'px'}} ;opacity : {{opacity}}"></view>
 <view id="container_left" style="width:{{menuWidth + 'px'}};height:{{screenHeight - 49 + 'px'}};left : {{menuLeft + 'px'}}">
   <button bindtap='clickMe'>菜单</button>
-  <listview id="list-view" item-arr="{{listData}}"></listview>
+  <listview id="list-view" list-arr="{{listData}}" bind:itemTap="itemDidTap" data-ss="0"></listview>
 </view>
