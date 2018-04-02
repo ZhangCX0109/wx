@@ -28,19 +28,9 @@
     </view>
     <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
       <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
-        <block wx:if="{{item.node.length > 0}}">
           <block wx:for="{{item.node}}" wx:for-item="item" wx:key="{{*this}}">
             <template is="subListItem" data="{{item}}" />
           </block>
-        </block>
-        <block wx:else>
-          <block wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
-            <navigator url="pages/{{page}}/{{page}}" class="navigator">
-              <view class="navigator-text">{{page}}</view>
-              <view class="navigator-arrow"></view>
-            </navigator>
-          </block>
-        </block>
       </view>
     </view>
   </view>
@@ -52,22 +42,15 @@
       <view class="kind-list-text">{{item.name}}</view>
       <!-- <image class="kind-list-img" src="resources/kind/{{item.id}}.png"></image> -->
     </view>
-    
+
     <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
       <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
-        <block wx:if="{{item.node.length > 0}}">
-          <block wx:for="{{item.node}}" wx:for-item="item" wx:key="{{*this}}">
-            <template is="listItem" data="{{item}}" />
-          </block>
-        </block>
-        <block wx:else>
           <block wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
             <navigator url="pages/{{page}}/{{page}}" class="navigator">
               <view class="navigator-text">{{page}}</view>
               <view class="navigator-arrow"></view>
             </navigator>
           </block>
-        </block>
       </view>
     </view>
   </view>
