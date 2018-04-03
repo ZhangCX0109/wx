@@ -44,7 +44,25 @@ var listData = [
       name: '表单组件',
       open: false,
       pages: ['button', 'checkbox', 'form', 'input', 'label', 'picker', 'radio', 'slider', 'switch', 'textarea'],
-      node: []
+      node: [{
+        id: 'view2',
+        name: '视图容器',
+        open: false,
+        pages: ['view', 'scroll-view', 'swiper'],
+        node: []
+      }, {
+        id: 'content2',
+        name: '基础内容',
+        open: false,
+        pages: ['text', 'icon', 'progress'],
+        node: []
+      }, {
+        id: 'form2',
+        name: '表单组件',
+        open: false,
+        pages: ['button', 'checkbox', 'form', 'input', 'label', 'picker', 'radio', 'slider', 'switch', 'textarea'],
+        node: []
+      }]
     }]
   }, {
     id: 'media',
@@ -72,13 +90,13 @@ var listData = [
 // }
 Page({
   itemDidTap : function(e){
-    console.log(e)
+    //console.log(e)
     // console.log(e.target.dataset.ss[0].open = !e.target.dataset.ss[0].open)
     // console.log(e.target.dataset.ss[0].open)
     // console.log(this.data.listData[0].open)
     // console.log('')
     this.setData({
-      listData : e.detail.list
+      listData : e.detail.list,
     })
   },
 
@@ -93,7 +111,14 @@ Page({
     shadowLeft: -app.globalData.screenWidth,
     opacity: 0.0,
     moving: false,
-    listData : listData
+    listData : listData,
+    menuShow: false
+
+  },
+  showMenu : function (e){
+    this.setData({
+      menuShow : !this.data.menuShow
+    })
   },
   clickMe: function (e) {
     var _this = this
@@ -105,8 +130,8 @@ Page({
     this.setData({ moving: true })
 
     var flag = this.data.menuLeft >= -this.data.menuWidth / 2 ? -1 : 1;
-    var fps = 30;
-    var time = 500;
+    var fps = 150;
+    var time = 700;
     var count = 0;
     var menuLeft = this.data.menuLeft
     var shadowLeft = this.data.shadowLeft
@@ -128,7 +153,7 @@ Page({
           })
         }
       }
-      menuPercent = utils.linearPercentage(count, fps, 4)
+      menuPercent = utils.linearPercentage(count, fps, 2)
       var menuPoi = menuPercent * _this.data.menuWidth * flag + menuLeft
       _this.setData({
         menuLeft: menuPoi,

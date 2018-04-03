@@ -21,7 +21,8 @@ Component({
     }
   },
   methods : {
-    leftBtnDidTap : function(){
+    leftBtnDidTap : function(e){
+      
       var detail = {}
       var option = {}
       this.triggerEvent('leftBtnTap',detail,option)

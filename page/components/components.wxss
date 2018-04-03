@@ -21,3 +21,21 @@
   z-index: 1;
 }
 
+.container-left{
+  transform: translateX(-100%);
+  transition: .5s;
+  transition-timing-function: ease;
+}
+.container-left-show{
+  transform: translateX(0);
+}
+.shadow-view{
+  opacity: 0;
+  transition: opacity .5s;
+  transform: translateX(-100%);
+}
+.shadow-view-show{
+  opacity: 0.7;
+  transition: opacity .5s;
+  transform: translateX(0)
+}

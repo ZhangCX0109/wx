@@ -1,57 +1,11 @@
-<!-- <scroll-view>
-  <text wx:for="{{itemArr}}" wx:key="{{*this}}">{{item.text}}
-    <block wx:if="{{item.node.length > 0}}">
-      <text wx:for="{{item.node}}" wx:key="{{*this}}">{{item.text}}
-        <block wx:if="{{item.node.length > 0}}">
-          <text wx:for="{{item.node}}" wx:key="{{*this}}">{{item.text}}
-            <block wx:if="{{item.node.length > 0}}">
-              <text wx:for="{{item.node}}" wx:key="{{*this}}">{{item.text}}</text>
-            </block>
-          </text>
-        </block>
-      </text>
-    </block>
-  </text>
-</scroll-view> -->
 
-<view class="kind-list">
+<import src="../../templates/menuTemp.wxml" />
+
+<scroll-view class="kind-list" scroll-y="true">
   <block wx:for-items="{{listArr}}" wx:key="{{item.id}}">
-    <template is="listItem" data="{{item}}" />
+    <template is="listItem" data="{{item:item,index:index}}" />
   </block>
-</view>
+</scroll-view>
 
-<template name="listItem">
-  <view class="kind-list-item">
-    <view id="{{item.id}}" class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}" bindtap="kindToggle">
-      <view class="kind-list-text">{{item.name}}</view>
-      <!-- <image class="kind-list-img" src="resources/kind/{{item.id}}.png"></image> -->
-    </view>
-    <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
-      <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
-          <block wx:for="{{item.node}}" wx:for-item="item" wx:key="{{*this}}">
-            <template is="subListItem" data="{{item}}" />
-          </block>
-      </view>
-    </view>
-  </view>
-</template>
 
-<template name="subListItem">
-    <view class="kind-list-item">
-    <view id="{{item.id}}" class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}" bindtap="kindToggle">
-      <view class="kind-list-text">{{item.name}}</view>
-      <!-- <image class="kind-list-img" src="resources/kind/{{item.id}}.png"></image> -->
-    </view>
 
-    <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
-      <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
-          <block wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
-            <navigator url="pages/{{page}}/{{page}}" class="navigator">
-              <view class="navigator-text">{{page}}</view>
-              <view class="navigator-arrow"></view>
-            </navigator>
-          </block>
-      </view>
-    </view>
-  </view>
-</template>

@@ -1,0 +1,127 @@
+
+<template name="listItem">
+  <view class="kind-list-item">
+    <view class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}" >
+      <view class="kind-list-text">{{item.name}}</view>
+      <view id="{{item.id}}" class="kind-img-container"  bindtap="kindToggle" data-item="{{item}}" data-idx="{{index}}">
+        <image class="kind-list-img {{item.open ? 'kind-list-img-show' : ''}}" src="../../src/imgs/add.png"></image>
+      </view> 
+    </view>
+    <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
+      <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
+        <block wx:if="{{item.node.length > 0}}">
+          <block wx:for="{{item.node}}" wx:for-item="item" wx:key="{{*this}}">
+            <template is="secListItem" data="{{item}}" />
+          </block>
+        </block>
+        <block wx:else>
+          <view class="navigator" wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
+              <view class="navigator-text">{{page}}</view>
+              <view class="navigator-arrow"></view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name="secListItem">
+    <view class="kind-list-item" style="padding-left : 10px">
+    <view class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}">
+      <view class="kind-list-text">{{item.name}}</view>
+      <view id="{{item.id}}" class="kind-img-container" bindtap="kindToggle" data-item="{{item}}" data-idx="{{index}}">
+        <image class="kind-list-img {{item.open ? 'kind-list-img-show' : ''}}" src="../../src/imgs/add.png"></image>
+      </view>
+    </view>
+    <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
+      <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
+          <block wx:if="{{item.node.length > 0}}">
+          <block wx:for="{{item.node}}" wx:for-item="item" wx:key="{{*this}}">
+            <template is="thirdListItem" data="{{item}}" />
+          </block>
+        </block>
+        <block wx:else>
+          <view class="navigator" wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
+              <view class="navigator-text">{{page}}</view>
+              <view class="navigator-arrow"></view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</template>
+<template name="thirdListItem">
+    <view class="kind-list-item" style="padding-left : 15px">
+    <view class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}">
+      <view class="kind-list-text">{{item.name}}</view>
+      <view id="{{item.id}}" class="kind-img-container" bindtap="kindToggle" data-item="{{item}}" data-idx="{{index}}">
+        <image class="kind-list-img {{item.open ? 'kind-list-img-show' : ''}}" src="../../src/imgs/add.png"></image>
+      </view>
+    </view>
+    <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
+      <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
+          <block wx:if="{{item.node.length > 0}}">
+          <block wx:for="{{item.node}}" wx:for-item="item" wx:key="{{*this}}">
+            <template is="fourthListItem" data="{{item}}" />
+          </block>
+        </block>
+        <block wx:else>
+          <view class="navigator" wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
+              <view class="navigator-text">{{page}}</view>
+              <view class="navigator-arrow"></view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</template>
+<template name="fourthListItem">
+    <view class="kind-list-item" style="padding-left : 20px">
+    <view class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}">
+      <view class="kind-list-text">{{item.name}}</view>
+      <view  id="{{item.id}}" class="kind-img-container" bindtap="kindToggle" data-item="{{item}}" data-idx="{{index}}">
+        <image class="kind-list-img {{item.open ? 'kind-list-img-show' : ''}}" src="../../src/imgs/add.png"></image>
+      </view>
+    </view>
+    <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
+      <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
+          <block wx:if="{{item.node.length > 0}}">
+          <block wx:for="{{item.node}}" wx:for-item="item" wx:key="{{*this}}">
+            <template is="fifthListItem" data="{{item}}" />
+          </block>
+        </block>
+        <block wx:else>
+          <view class="navigator" wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
+              <view class="navigator-text">{{page}}</view>
+              <view class="navigator-arrow"></view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</template>
+<template name="fifthListItem">
+    <view class="kind-list-item" style="padding-left : 25px">
+    <view class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}">
+      <view class="kind-list-text">{{item.name}}</view>
+      <view id="{{item.id}}" class="kind-img-container" bindtap="kindToggle" data-item="{{item}}" data-idx="{{index}}">
+        <image class="kind-list-img {{item.open ? 'kind-list-img-show' : ''}}" src="../../src/imgs/add.png"></image>
+      </view>
+    </view>
+    <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
+      <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
+          <block wx:if="{{item.node.length > 0}}">
+          <block wx:for="{{item.node}}" wx:for-item="item" wx:key="{{*this}}">
+            <template is="secListItem" data="{{item}}" />
+          </block>
+        </block>
+        <block wx:else>
+          <view class="navigator" wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
+              <view class="navigator-text">{{page}}</view>
+              <view class="navigator-arrow"></view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</template>
