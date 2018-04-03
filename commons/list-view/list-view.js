@@ -25,10 +25,15 @@ Component({
     })
   }
 })
-function changeStatus(path,list){
-  console.log(path)
-  console.log(list)
-
+function changeStatus(pathArr,list){
+  var item = list
+  for (var i = 0; i < pathArr.length; i++){
+    if(i == pathArr.length - 1){
+      item[pathArr[i]].open = !item[pathArr[i]].open
+    }
+    item = item[pathArr[i]].node
+  }
+  console.log(item)
   return list;
 }
 // function changeStatus(id, list, parentList, parentIdx) {
